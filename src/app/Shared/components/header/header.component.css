@@ -1,0 +1,13 @@
+h6, h5{
+    margin: 0;
+    padding: 0;
+}
+.online-elements {
+    display: flex;
+    align-items: center;
+}
+
+nav{
+    padding-left: 10px;
+    padding-right: 10px;
+}
