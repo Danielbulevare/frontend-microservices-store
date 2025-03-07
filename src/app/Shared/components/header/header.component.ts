@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { KeycloakService } from '../../../core/Services/Keycloak/keycloak.service';
 
 @Component({
   selector: 'app-header',
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export default class HeaderComponent {
+  private keycloakService = inject(KeycloakService);
 
+  async logout(){
+    this.keycloakService.logout();
+  }
 }

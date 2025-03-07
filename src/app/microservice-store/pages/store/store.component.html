@@ -1,0 +1,43 @@
+<h5>Tienda</h5>
+
+<section class="store">
+  @for (item of products; track $index) {
+  <div class="card text-center">
+    <img [src]="item.urlImg" alt="Foto del producto" class="img-fluid"/>
+    <div class="card-body">
+      <h5 class="card-title">{{item.name}}</h5>
+      <p class="card-text">$ {{item.price}}</p>
+
+
+      <button
+        class="btn btn-primary"
+        type="button"
+      >
+        Agregar al carrito
+      </button>
+    </div>
+  </div>
+  }
+
+</section>
+
+@if (errorMessage() != '') {
+  <app-alert [message]="errorMessage()" [alertType]="alertType()"></app-alert>
+}
+<nav aria-label="...">
+  <ul class="pagination">
+    <li [class.disabled]="disabledPreviousButton()" class="page-item disabled">
+      <a class="page-link" [routerLink]="['/microservice-store/store', getPreviousPage()]" (click)="previousPage()">Anterior</a>
+    </li>
+
+    @for (item of [].constructor(pageNumbers()); track $index) {
+    <li class="page-item" routerLinkActive="active">
+      <a class="page-link" [routerLink]="['/microservice-store/store',$index]" (click)="goToPage($index)">{{ $index }}</a>
+    </li>
+    }
+
+    <li [class.disabled]="disabledNextButton()" class="page-item">
+      <a class="page-link" [routerLink]="['/microservice-store/store', getNextPage()]" (click)="nextPage()">Siguiente</a>
+    </li>
+  </ul>
+</nav>
