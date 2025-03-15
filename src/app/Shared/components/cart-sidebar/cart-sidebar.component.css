@@ -1,0 +1,47 @@
+.margin-top-right{
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.overflow-scroll{
+    overflow-y: scroll;
+}
+
+.grid-distribution{
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.height{
+    height: 85vh;
+}
+
+.grid-distribution-buy{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+
+    align-items: center;
+}
+
+.remove-margin-below{
+    margin-bottom: 0;
+}
+
+.btn-buy{
+    grid-column-start: 2;  
+    grid-column-end: 3;
+
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.drp-notification-and-paymentMethod{
+    grid-column-start: 1;
+    grid-column-end: 3;
+
+    grid-row-start: 2;
+    grid-row-end: 3;
+}

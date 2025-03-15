@@ -1,0 +1,109 @@
+<div class="list-group margin-top-right overflow-scroll height border">
+  <div class="grid-distribution-buy mt-2 ms-2 me-2">
+    <h5 class="remove-margin-below">
+      Total: <span class="text-success">$ {{ totalToPay() }} </span>
+    </h5>
+
+    @if (totalProducts() > 0) {
+    <button
+      type="button"
+      class="btn btn-primary btn-sm btn-buy"
+      (click)="makePurchase()"
+    >
+      Comprar
+    </button>
+  }
+
+  @if(notificationMessage()){
+    <app-alert
+      [message]="notificationMessage()"
+      [alertType]="alertType()"
+      class="drp-notification-and-paymentMethod"
+    ></app-alert>
+    }@else {
+    <div class="dropdown drp-notification-and-paymentMethod">
+      <button
+        class="btn btn-secondary dropdown-toggle btn-sm"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        @if (getPaymentMethod()) {
+        {{ getPaymentMethod() }}
+        }@else {Método de pago}
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="dropdown-item" (click)="setPaymentMethod('EFECTIVO')"
+            >EFECTIVO</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="setPaymentMethod('TARJETA')"
+            >TARJETA</a
+          >
+        </li>
+      </ul>
+    </div>
+    }
+  </div>
+
+  @for (item of getProducts; track $index) {
+
+  <div class="card mt-2 mx-2 shadow-sm" style="width: 18rem">
+    <img
+      [src]="item.product.urlImg"
+      class="card-img-top h-50 mt-2 w-50 container"
+      alt="Imagen del producto"
+    />
+    <div class="card-body">
+      <h5 class="card-title">{{ item.product.name }}</h5>
+
+      <div class="grid-distribution">
+        <h6 class="card-subtitle mb-2 text-body-secondary">Cantidad</h6>
+        <h6 class="card-subtitle mb-2 text-success">Precio</h6>
+        <h6 class="card-subtitle mb-2 text-success">Total</h6>
+
+        <h6 class="card-subtitle mb-2 text-body-secondary">
+          {{ item.quantity }}
+        </h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary fw-bold">
+          $ {{ item.product.price }}
+        </h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary fw-bold">
+          $ {{ item.total }}
+        </h6>
+      </div>
+
+      <div
+        class="btn-group w-100"
+        role="group"
+        aria-label="Basic outlined example"
+      >
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="increaseQuantity(item.product.id)"
+        >
+          +
+        </button>
+        <button
+          type="button"
+          [class]="{ disabled: item.quantity == 1 }"
+          class="btn btn-outline-primary"
+          (click)="decreaseQuantity(item.product.id)"
+        >
+          -
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="deleteProduct(item.product.id)"
+        >
+          <img src="assets/img/trash3-fill.svg" alt="Carrito de compras" />
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+</div>

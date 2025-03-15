@@ -9,7 +9,6 @@ import { Component, Input } from '@angular/core';
 export class AlertComponent {
   @Input() message: string = '';
   @Input() alertType: string = '';
-  @Input() icon: string = '';
 
   getIco(): string {
     switch (this.alertType) {

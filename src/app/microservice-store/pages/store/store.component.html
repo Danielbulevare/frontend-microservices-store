@@ -2,16 +2,16 @@
 
 <section class="store">
   @for (item of products; track $index) {
-  <div class="card text-center">
+  <div class="card text-center shadow-sm">
     <img [src]="item.urlImg" alt="Foto del producto" class="img-fluid"/>
     <div class="card-body">
       <h5 class="card-title">{{item.name}}</h5>
       <p class="card-text">$ {{item.price}}</p>
 
-
       <button
         class="btn btn-primary"
         type="button"
+        (click)="addProduct(item)"
       >
         Agregar al carrito
       </button>

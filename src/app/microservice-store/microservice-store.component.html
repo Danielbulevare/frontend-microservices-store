@@ -1,3 +1,24 @@
 <app-header></app-header>
 
-<router-outlet />
+<div
+  class="grid-distribution"
+  [class]="{
+    'grid-with-sidebar': isOpen,
+    'grid-no-sidebar': !isOpen
+  }"
+>
+  <app-cart-sidebar
+    [class]="{
+      'hide-cart-sidebar': !isOpen,
+      'show-cart-sidebar': isOpen
+    }"
+    class="cart-sidebar"
+  ></app-cart-sidebar>
+
+  <div [class]="{
+    'grid-with-sidebar': isOpen,
+    'grid-no-sidebar': !isOpen
+  }">
+    <router-outlet />
+  </div>
+</div>

@@ -29,9 +29,9 @@
     </div>
 
     <div>
-      <button class="btn position-relative btn-sm" type="button">
+      <button class="btn position-relative btn-sm" type="button" (click)="openCartSidebar()">
         <img src="assets/img/cart-fill.svg" alt="Carrito de compras" />
-        <span class="badge text-bg-danger">0</span>
+        <span class="badge text-bg-danger">{{totalProducts}}</span>
       </button>
     </div>
 

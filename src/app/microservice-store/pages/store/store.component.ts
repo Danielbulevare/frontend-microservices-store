@@ -1,10 +1,11 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ProductsService } from '../../../core/Services/Products/products.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Product } from '../../../core/Entities/Products/product';
 import { FilesService } from '../../../core/Services/Files/files.service';
 import { UUID } from 'crypto';
 import { AlertComponent } from '../../../Shared/components/alert/alert.component';
+import { CartService } from '../../../core/Services/Cart/cart.service';
 
 @Component({
   selector: 'app-store',
@@ -13,6 +14,8 @@ import { AlertComponent } from '../../../Shared/components/alert/alert.component
   styleUrl: './store.component.css',
 })
 export default class StoreComponent implements OnInit {
+  private productCarList = inject(CartService);
+
   private readonly numbersRecords: number = 8;
 
   errorMessage = signal('');
@@ -48,6 +51,10 @@ export default class StoreComponent implements OnInit {
 
       this.findProducts();
     }
+  }
+
+  addProduct(product: Product) {
+    this.productCarList.addProduct(product);
   }
 
   private getTotalProducts() {
@@ -98,7 +105,10 @@ export default class StoreComponent implements OnInit {
           );
       },
       error: (response: any) => {
-        this.configMessageAlert('No se pudo recuperar la imagen del producto.', 'alert-warning');
+        this.configMessageAlert(
+          'No se pudo recuperar la imagen del producto.',
+          'alert-warning'
+        );
 
         console.log('Error al recuperar la imagen del producto: ' + response);
       },
