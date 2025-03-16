@@ -3,20 +3,34 @@ import HeaderComponent from '../Shared/components/header/header.component';
 import { RouterOutlet } from '@angular/router';
 import { CartSidebarComponent } from '../Shared/components/cart-sidebar/cart-sidebar.component';
 import { CartSideBarService } from '../core/Services/CartSideBar/cart-side-bar.service';
+import { MenuSidebarComponent } from '../Shared/components/menu-sidebar/menu-sidebar/menu-sidebar.component';
+import { MenuSidebarService } from '../core/Services/Menu-sideBar/menu-sidebar.service';
 
 @Component({
   selector: 'app-microservice-store',
-  imports: [HeaderComponent, RouterOutlet, CartSidebarComponent],
+  imports: [
+    HeaderComponent,
+    RouterOutlet,
+    CartSidebarComponent,
+    MenuSidebarComponent,
+  ],
   templateUrl: './microservice-store.component.html',
   styleUrl: './microservice-store.component.css',
 })
 export default class MicroserviceStoreComponent implements OnInit {
-  ngOnInit(): void {
-    this.isOpen;
-  }
   private cartSidebarService = inject(CartSideBarService);
-    
-    get isOpen():boolean{
-      return this.cartSidebarService.getOpen;
-    }
+  private menuSidebarService = inject(MenuSidebarService);
+
+  ngOnInit(): void {
+    this.isCartSidebarOpen;
+    this.isMenuSidebarOpen;
+  }
+
+  get isCartSidebarOpen(): boolean {
+    return this.cartSidebarService.getOpen;
+  }
+
+  get isMenuSidebarOpen(): boolean {
+    return this.menuSidebarService.getOpen;
+  }
 }

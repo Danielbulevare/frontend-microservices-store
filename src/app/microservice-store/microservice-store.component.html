@@ -1,24 +1,29 @@
 <app-header></app-header>
-
 <div
   class="grid-distribution"
-  [class]="{
-    'grid-with-sidebar': isOpen,
-    'grid-no-sidebar': !isOpen
-  }"
 >
+ <app-menu-sidebar [class]="{
+      'hide-menu-sidebar': !isMenuSidebarOpen,
+      'show-menu-sidebar': isMenuSidebarOpen
+    }"
+    class="menu-sidebar"></app-menu-sidebar> 
+
   <app-cart-sidebar
     [class]="{
-      'hide-cart-sidebar': !isOpen,
-      'show-cart-sidebar': isOpen
+      'hide-cart-sidebar': !isCartSidebarOpen,
+      'show-cart-sidebar': isCartSidebarOpen
     }"
     class="cart-sidebar"
   ></app-cart-sidebar>
 
-  <div [class]="{
-    'grid-with-sidebar': isOpen,
-    'grid-no-sidebar': !isOpen
-  }">
+  <div
+    [class]="{
+      'grid-with-cart-sidebar': isCartSidebarOpen,
+      'grid-with-menu-sidebar': isMenuSidebarOpen,
+      'grid-no-sidebar': !isCartSidebarOpen && !isMenuSidebarOpen,
+      'grid-with-sidebars': isCartSidebarOpen && isMenuSidebarOpen
+    }"
+  >
     <router-outlet />
   </div>
 </div>

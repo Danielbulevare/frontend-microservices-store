@@ -12,6 +12,10 @@ export const routes: Routes = [
           import('./microservice-store/pages/store/store.component'),
         pathMatch: 'full',
       },
+      {
+        path: 'products',
+        loadComponent: () => import('./microservice-store/pages/list-products/list-products.component'),
+      },
     ],
   },
   {

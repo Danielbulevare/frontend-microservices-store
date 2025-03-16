@@ -1,38 +1,61 @@
 .grid-distribution{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    transition: grid-template-columns 0.5s ease-in-out;
 }
 
 /*Grid que ocupa el sidebar del carrito cuando es visible*/
 .cart-sidebar {
-    grid-column-start: 3;
+    grid-column-start: 4;
+    grid-column-end: 5;
+
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+/*Grid que ocupa el sidebar del menu cuando es visible*/
+.menu-sidebar {
+    grid-column-start: 1;
+    grid-column-end: 2;
+
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+/* Cuando los sidebars están ocultos, el contenido ocupa toda la grilla */
+.grid-no-sidebar {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+/* Cuando el sidebar está visible, el contenido se reduce */
+.grid-with-cart-sidebar {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+/* Cuando el sidebar está visible, el contenido se reduce */
+.grid-with-menu-sidebar {
+    grid-column-start: 2;
+    grid-column-end: 5;
+
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+/* Cuando ambos sidebars están visibles, el contenido se reduce */
+.grid-with-sidebars {
+    grid-column-start: 2;
     grid-column-end: 4;
 
     grid-row-start: 1;
     grid-row-end: 3;
-}
-
-/* Cuando el sidebar está oculto, el contenido ocupa toda la grilla */
-.grid-no-sidebar {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    
-    grid-row-start: 1;
-    grid-row-end: 3;
-
-    grid-template-columns: repeat(2, 1fr) 0;
-}
-
-/* Cuando el sidebar está visible, el contenido se reduce */
-.grid-with-sidebar {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    
-    grid-row-start: 1;
-    grid-row-end: 3;
-    grid-template-columns: repeat(2, 1fr) 316px;
 }
 
 /*Oculta el sidebar del carrito*/
@@ -43,5 +66,16 @@
 
 /* Muestra el sidebar del carrito*/
 .show-cart-sidebar {
+    visibility: visible;
+}
+
+/*Oculta el sidebar del menu*/
+.hide-menu-sidebar {
+    visibility: hidden;
+    transition: width 0.3s ease-in-out;
+}
+
+/* Muestra el sidebar del menu*/
+.show-menu-sidebar {
     visibility: visible;
 }
