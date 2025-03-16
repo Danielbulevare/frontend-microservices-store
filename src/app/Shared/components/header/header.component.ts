@@ -31,4 +31,8 @@ export default class HeaderComponent {
   get totalProducts(): number{
     return this.productCarList.totalProducts;
   }
+
+  get userName(): string | undefined{
+    return this.keycloakService.profile?.username;
+  }
 }
