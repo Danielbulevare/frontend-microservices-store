@@ -6,3 +6,16 @@
 .height {
     height: 85vh;
 }
+
+a {
+    color: white;
+    text-decoration-line: none;
+}
+
+.inactive {
+    background-color: gray;
+}
+
+.btn-active {
+    background-color: #0d6efd;
+}
