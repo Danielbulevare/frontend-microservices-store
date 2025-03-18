@@ -21,3 +21,8 @@ img{
     margin-left: 10px;
     margin-right: 10px;
 }
+
+nav {
+    display: flex;
+    justify-content: center;
+}

@@ -10,6 +10,7 @@
 a {
     color: white;
     text-decoration-line: none;
+    display: block;
 }
 
 .inactive {

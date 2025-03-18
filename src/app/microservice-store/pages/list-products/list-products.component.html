@@ -1,9 +1,9 @@
 <div class="online-distribution margin-t-l-r">
-    <h5>Lista de productos</h5>
+  <h5>Lista de productos</h5>
 
-    <div>
-        <button type="button" class="btn btn-primary btn-sm">Nuevo</button>
-    </div>
+  <div>
+    <button type="button" class="btn btn-primary btn-sm">Nuevo</button>
+  </div>
 </div>
 
 <section>
@@ -17,9 +17,10 @@
     </thead>
 
     <tbody>
+      @for (item of products; track $index) {
       <tr>
-        <td>Mark</td>
-        <td>Otto</td>
+        <td>{{item.name}}</td>
+        <td>$ {{item.price}}</td>
         <td>
           <button type="button" class="btn btn-success btn-sm">
             <img src="assets/img/edit-svgrepo-com.svg" alt="Editar" />
@@ -29,32 +30,25 @@
           </button>
         </td>
       </tr>
-      <tr>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>
-          <button type="button" class="btn btn-success btn-sm">
-            <img src="assets/img/edit-svgrepo-com.svg" alt="Editar" />
-          </button>
-          <button type="button" class="btn btn-danger btn-sm ms-2">
-            <img src="assets/img/trash-fill-white.svg" alt="Eliminar" />
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>
-          <button type="button" class="btn btn-success btn-sm">
-            <img src="assets/img/edit-svgrepo-com.svg" alt="Editar" />
-          </button>
-          <button type="button" class="btn btn-danger btn-sm ms-2">
-            <img src="assets/img/trash-fill-white.svg" alt="Eliminar" />
-          </button>
-        </td>
-      </tr>
+      }
     </tbody>
   </table>
 
-  <app-pagination></app-pagination>
+  <nav aria-label="...">
+  <ul class="pagination">
+    <li [class.disabled]="disabledPreviousButton()" class="page-item disabled">
+      <a class="page-link" [routerLink]="['/microservice-store/products', getPreviousPage()]" (click)="previousPage()">Anterior</a>
+    </li>
+
+    @for (item of [].constructor(pageNumbers()); track $index) {
+    <li class="page-item" routerLinkActive="active">
+      <a class="page-link" [routerLink]="['/microservice-store/products',$index]" (click)="goToPage($index)">{{ $index }}</a>
+    </li>
+    }
+
+    <li [class.disabled]="disabledNextButton()" class="page-item">
+      <a class="page-link" [routerLink]="['/microservice-store/products', getNextPage()]" (click)="nextPage()">Siguiente</a>
+    </li>
+  </ul>
+</nav>
 </section>
