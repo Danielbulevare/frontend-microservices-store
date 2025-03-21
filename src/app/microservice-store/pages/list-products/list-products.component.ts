@@ -2,10 +2,12 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ProductsService } from '../../../core/Services/Products/products.service';
 import { Product } from '../../../core/Entities/Products/product';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ConfirmationModalComponent } from '../../../Shared/components/confirmation-modal/confirmation-modal.component';
+import { AlertComponent } from '../../../Shared/components/alert/alert.component';
 
 @Component({
   selector: 'app-list-products',
-  imports: [RouterModule],
+  imports: [RouterModule, ConfirmationModalComponent, AlertComponent],
   templateUrl: './list-products.component.html',
   styleUrl: './list-products.component.css',
 })
@@ -16,17 +18,32 @@ export default class ListProductsComponent implements OnInit {
 
   errorMessage = signal('');
   alertType = signal('');
+  private deleteProductId = signal('');
+
   products: Product[] = [];
 
   disabledNextButton = signal(true);
   disabledPreviousButton = signal(true);
   currentPage = signal(0);
   totalProducts = signal(0);
+  notificationMessage = signal('');
   pageNumbers = computed(() =>
     Math.ceil(this.totalProducts() / this.numbersRecords)
   );
 
+  private timeoutId: NodeJS.Timeout | null = null;
+
   constructor(private route: ActivatedRoute) {}
+
+  private showMessage(message: string, alert: string, duration: number) {
+    /*Este método controlo cuanto tiempo debe mostrase la notificación*/
+    this.configMessageAlert(message, alert);
+
+    this.timeoutId = setTimeout(() => {
+      //Reseate el mensaje para que desaparezca de la UI al finalizar el tiempo
+      this.notificationMessage.set('');
+    }, duration);
+  }
 
   ngOnInit(): void {
     if (typeof document !== 'undefined') {
@@ -47,8 +64,12 @@ export default class ListProductsComponent implements OnInit {
         this.totalProducts.set(response);
       },
       error: (response: any) => {
-        this.configMessageAlert(response.error.message, 'alert-danger');
-        console.log('Error al recuperar el total de productos: ' + response);
+        this.showMessage(
+          'No se puedo recuperar el total de los productos',
+          'alert-danger',
+          5000
+        );
+        console.log('Error: ' + response);
       },
     });
   }
@@ -64,11 +85,35 @@ export default class ListProductsComponent implements OnInit {
           this.disabledPreviousBtn();
         },
         error: (response: any) => {
-          this.configMessageAlert(response.error.message, 'alert-danger');
-
-          console.log('Error al recuperar los productos: ' + response);
+          this.showMessage(
+            'No se puedo recuperar los productos', //HERE ERROR AL ELIMINAR
+            'alert-danger',
+            5000
+          );
+          console.log('Error: ' + response);
         },
       });
+  }
+
+  public deleteProduct(productId: string) {
+    this.productService.deleteProduct(productId).subscribe({
+      next: (response: any) => {
+        this.showMessage(
+          'Producto eliminado correctamente.',
+          'alert-success',
+          5000
+        );
+        this.findProducts();
+      },
+      error: (response: any) => {
+        this.showMessage(
+          'No se puedo eliminar el producto.',
+          'alert-danger',
+          5000
+        );
+        console.log('Error: ' + response);
+      },
+    });
   }
 
   goToPage(page: number) {
@@ -110,7 +155,15 @@ export default class ListProductsComponent implements OnInit {
 
   private configMessageAlert(message: string, messageType: string): void {
     //Mensage y estilo a mostrar en el alert
-    this.errorMessage.set(message);
+    this.notificationMessage.set(message);
     this.alertType.set(messageType);
+  }
+
+  get getDeleteProductId(): string {
+    return this.deleteProductId();
+  }
+
+  set setDeleteProductId(productId: string) {
+    this.deleteProductId.set(productId);
   }
 }

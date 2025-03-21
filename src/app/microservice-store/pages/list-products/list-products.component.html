@@ -1,3 +1,5 @@
+<app-confirmation-modal (confirmAction)="deleteProduct(getDeleteProductId)" modalTitle="Eliminar producto" modalMessage="¿Estás seguro?"></app-confirmation-modal>
+
 <div class="online-distribution margin-t-l-r">
   <h5>Lista de productos</h5>
 
@@ -7,6 +9,12 @@
 </div>
 
 <section>
+  @if (notificationMessage()) {
+    <app-alert
+        [message]="notificationMessage()"
+        [alertType]="alertType()"
+      ></app-alert>
+  }
   <table class="table table-striped table-hover">
     <thead>
       <tr>
@@ -25,7 +33,7 @@
           <button type="button" class="btn btn-success btn-sm">
             <img src="assets/img/edit-svgrepo-com.svg" alt="Editar" />
           </button>
-          <button type="button" class="btn btn-danger btn-sm ms-2">
+          <button type="button" class="btn btn-danger btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="setDeleteProductId = item.id">
             <img src="assets/img/trash-fill-white.svg" alt="Eliminar" />
           </button>
         </td>
