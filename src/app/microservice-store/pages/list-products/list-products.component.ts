@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ProductsService } from '../../../core/Services/Products/products.service';
 import { Product } from '../../../core/Entities/Products/product';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ConfirmationModalComponent } from '../../../Shared/components/confirmation-modal/confirmation-modal.component';
 import { AlertComponent } from '../../../Shared/components/alert/alert.component';
 
@@ -33,7 +33,7 @@ export default class ListProductsComponent implements OnInit {
 
   private timeoutId: NodeJS.Timeout | null = null;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router:Router) {}
 
   private showMessage(message: string, alert: string, duration: number) {
     /*Este método controlo cuanto tiempo debe mostrase la notificación*/
@@ -85,11 +85,13 @@ export default class ListProductsComponent implements OnInit {
           this.disabledPreviousBtn();
         },
         error: (response: any) => {
+          this.products = [];
           this.showMessage(
-            'No se puedo recuperar los productos', //HERE ERROR AL ELIMINAR
+            `No se puedo recuperar los productos de la página`, //HERE ERROR AL ELIMINAR
             'alert-danger',
             5000
           );
+
           console.log('Error: ' + response);
         },
       });
@@ -103,7 +105,9 @@ export default class ListProductsComponent implements OnInit {
           'alert-success',
           5000
         );
+
         this.findProducts();
+        this.getTotalProducts();        
       },
       error: (response: any) => {
         this.showMessage(
