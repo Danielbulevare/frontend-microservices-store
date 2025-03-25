@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ProductsService } from '../../../core/Services/Products/products.service';
 import { Product } from '../../../core/Entities/Products/product';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ConfirmationModalComponent } from '../../../Shared/components/confirmation-modal/confirmation-modal.component';
 import { AlertComponent } from '../../../Shared/components/alert/alert.component';
 
@@ -33,7 +33,7 @@ export default class ListProductsComponent implements OnInit {
 
   private timeoutId: NodeJS.Timeout | null = null;
 
-  constructor(private route: ActivatedRoute, private router:Router) {}
+  constructor(private route: ActivatedRoute) {}
 
   private showMessage(message: string, alert: string, duration: number) {
     /*Este método controlo cuanto tiempo debe mostrase la notificación*/

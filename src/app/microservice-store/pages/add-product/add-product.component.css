@@ -1,0 +1,8 @@
+.margin{
+    margin: 10px;
+}
+
+.online-distribution {
+    display: flex;
+    justify-content: space-between;
+}

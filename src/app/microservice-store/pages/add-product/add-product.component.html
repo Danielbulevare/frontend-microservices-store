@@ -1,0 +1,37 @@
+<div class="margin">
+  <div class="online-distribution">
+    <h5>Nuevo producto</h5>
+
+    <button type="button" [class.disabled]="newProductForm.invalid" class="btn btn-primary btn-sm">Guardar</button>
+</div>
+
+<form [formGroup]="newProductForm">
+    <label for="txtName" class="form-label">Producto*</label>
+    <input
+      id="txtName"
+      class="form-control mb-2"
+      type="text"
+      placeholder="Ej. Caja 1"
+      aria-label="default input example"
+      formControlName="product"
+    />
+
+    @if (product.hasError('required') && (product.touched || product.dirty)) {
+        <app-alert message="El campo es requerido." alertType="alert-danger"></app-alert>
+    }
+
+    <label for="txtName" class="form-label">Precio*</label>
+    <input
+      id="txtPrice"
+      class="form-control mb-2"
+      type="number"
+      placeholder="Ej. 10.5"
+      aria-label="default input example"
+      formControlName="price"
+    />
+
+    @if (price.hasError('required') && (price.touched || price.dirty)) {
+        <app-alert message="Solo se aceptan números enteros y decimales positivos." alertType="alert-danger"></app-alert>
+    }
+  </form>
+</div>

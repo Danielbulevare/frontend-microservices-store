@@ -14,7 +14,17 @@ export const routes: Routes = [
       },
       {
         path: 'products/:page',
-        loadComponent: () => import('./microservice-store/pages/list-products/list-products.component'),
+        loadComponent: () =>
+          import(
+            './microservice-store/pages/list-products/list-products.component'
+          ),
+      },
+      {
+        path: 'products/add/product',
+        loadComponent: () =>
+          import(
+            './microservice-store/pages/add-product/add-product.component'
+          ),
       },
     ],
   },
