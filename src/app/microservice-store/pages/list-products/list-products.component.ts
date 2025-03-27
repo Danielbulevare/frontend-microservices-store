@@ -87,7 +87,7 @@ export default class ListProductsComponent implements OnInit {
         error: (response: any) => {
           this.products = [];
           this.showMessage(
-            `No se puedo recuperar los productos de la página`, //HERE ERROR AL ELIMINAR
+            `No se puedo recuperar los productos de la página`,
             'alert-danger',
             5000
           );

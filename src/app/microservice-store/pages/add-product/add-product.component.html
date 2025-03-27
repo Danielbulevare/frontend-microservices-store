@@ -2,10 +2,46 @@
   <div class="online-distribution">
     <h5>Nuevo producto</h5>
 
-    <button type="button" [class.disabled]="newProductForm.invalid" class="btn btn-primary btn-sm">Guardar</button>
-</div>
+    <button
+      type="button"
+      [class.disabled]="newProductForm.invalid"
+      class="btn btn-primary btn-sm"
+      (click)="saveProduct()"
+    >
+      Guardar
+    </button>
+  </div>
 
-<form [formGroup]="newProductForm">
+  <form [formGroup]="newProductForm">
+    <div class="text-center mt-2">
+      @if (notificationMessage()) {
+      <app-alert
+        [message]="notificationMessage()"
+        [alertType]="alertType()"
+      ></app-alert>
+      }
+
+      <img
+        [src]="selectImage || 'assets/img/photo-svgrepo-com.svg'"
+        class="rounded"
+        alt="Imagen del producto"
+        (click)="openFileSelector()"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="formFile" class="form-label">Imagen del producto</label>
+      <input
+        class="form-control"
+        type="file"
+        id="formFile"
+        accept="image/*"
+        #fileInput
+        (change)="onFileSelected($event)"
+        formControlName="productPhoto"
+      />
+    </div>
+
     <label for="txtName" class="form-label">Producto*</label>
     <input
       id="txtName"
@@ -14,10 +50,14 @@
       placeholder="Ej. Caja 1"
       aria-label="default input example"
       formControlName="product"
+      #txtName
     />
 
     @if (product.hasError('required') && (product.touched || product.dirty)) {
-        <app-alert message="El campo es requerido." alertType="alert-danger"></app-alert>
+    <app-alert
+      message="El campo es requerido."
+      alertType="alert-danger"
+    ></app-alert>
     }
 
     <label for="txtName" class="form-label">Precio*</label>
@@ -31,7 +71,10 @@
     />
 
     @if (price.hasError('required') && (price.touched || price.dirty)) {
-        <app-alert message="Solo se aceptan números enteros y decimales positivos." alertType="alert-danger"></app-alert>
+    <app-alert
+      message="Solo se aceptan números enteros y decimales positivos."
+      alertType="alert-danger"
+    ></app-alert>
     }
   </form>
 </div>
